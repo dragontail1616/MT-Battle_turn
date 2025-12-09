@@ -1,0 +1,75 @@
+[gd_scene load_steps=3 format=3 uid="uid://dbbth7y763kbl"]
+
+[ext_resource type="Script" uid="uid://sv40c83487cu" path="res://Scenes/UI/HUD/Inventary/popups.gd" id="1_c8qbh"]
+[ext_resource type="Texture2D" uid="uid://pwlm8n3vf7yj" path="res://icon.svg" id="2_0abmi"]
+
+[node name="Popup" type="CanvasLayer"]
+script = ExtResource("1_c8qbh")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PopupPanel" type="PopupPanel" parent="Control"]
+oversampling_override = 1.0
+title = "Stats"
+initial_position = 1
+size = Vector2i(218, 340)
+visible = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/PopupPanel"]
+custom_minimum_size = Vector2(210, 250)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 16
+
+[node name="SkillName" type="Label" parent="Control/PopupPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Skill_Name"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/PopupPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Control/PopupPanel/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("2_0abmi")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="StastText" type="VBoxContainer" parent="Control/PopupPanel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PointsLabel" type="Label" parent="Control/PopupPanel/VBoxContainer/HBoxContainer/StastText"]
+layout_mode = 2
+text = "Points"
+
+[node name="RangeLabel" type="Label" parent="Control/PopupPanel/VBoxContainer/HBoxContainer/StastText"]
+layout_mode = 2
+text = "Range"
+
+[node name="LabelCost" type="Label" parent="Control/PopupPanel/VBoxContainer/HBoxContainer/StastText"]
+layout_mode = 2
+text = "Cost"
+
+[node name="DescriptionLabel" type="Label" parent="Control/PopupPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 186)
+layout_mode = 2
+autowrap_mode = 3

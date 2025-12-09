@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemSkill" load_steps=3 format=3 uid="uid://c00vpqhply67v"]
+
+[ext_resource type="Texture2D" uid="uid://pwlm8n3vf7yj" path="res://icon.svg" id="1_bbc1p"]
+[ext_resource type="Script" uid="uid://dmhqfqiup8k3c" path="res://Resources/Game/Items/item_skill.gd" id="1_gdnw0"]
+
+[resource]
+script = ExtResource("1_gdnw0")
+item_skill_name = "Stone Cannon"
+item_skill_image = ExtResource("1_bbc1p")
+points = 20.0
+distance = 40.0
+cost = 20.0
+item_skill_description = "The basic spell in the rock school of magic"
+metadata/_custom_type_script = "uid://dmhqfqiup8k3c"

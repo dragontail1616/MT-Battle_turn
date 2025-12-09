@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://6ukgc5urouio"]
+
+[ext_resource type="Script" uid="uid://smvurew5qp5y" path="res://Scenes/UI/HUD/hud.gd" id="1_v2yv0"]
+[ext_resource type="PackedScene" uid="uid://bngqve0nnciiq" path="res://Scenes/UI/HUD/Inventary/inventary.tscn" id="2_l566u"]
+[ext_resource type="PackedScene" uid="uid://dqgmdn55ir60l" path="res://Scenes/UI/HUD/Crosshair/crosshair.tscn" id="3_lp3hy"]
+
+[node name="HUD" type="CanvasLayer"]
+process_mode = 1
+script = ExtResource("1_v2yv0")
+
+[node name="Inventary" parent="." instance=ExtResource("2_l566u")]
+
+[node name="Crosshair" parent="." instance=ExtResource("3_lp3hy")]

@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqgmdn55ir60l"]
+
+[ext_resource type="Script" uid="uid://bjosibym4xsd1" path="res://Scenes/UI/HUD/Crosshair/crosshair.gd" id="1_aipj8"]
+
+[node name="Crosshair" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_aipj8")
+ring_color = Color(1, 1, 1, 0.49803922)
+dot_color = Color(0.88235295, 0.88235295, 0.88235295, 0.5882353)

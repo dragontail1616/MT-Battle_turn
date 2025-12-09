@@ -1,0 +1,215 @@
+class_name GameManager
+extends Node
+
+var turn_time: float = .5
+var level_name: String = "":
+	set(value):
+		if Constants.levels_path.has(value):
+			level_name = value
+	get():
+		return level_name.to_lower()
+
+var character_list: Dictionary[String, Character] = {}
+var turn_order: Array[String] = []
+var turn: int = 0
+var rounds: int = 0
+var turn_phase: Constants.TurnPhase = Constants.TurnPhase.ON_TURN_STARTED
+var round_phase: Constants.RoundPhase = Constants.RoundPhase.ON_ROUND_STARTED
+
+var _new_ui_manager: UIManager = null
+var _current_character: Character = null:
+	set(value):
+		if not value and not value is Character:
+			return
+		if _current_character:
+			_current_character.character_active = false
+		_current_character = value
+		_current_character.character_active = true
+
+var _timer_turn: Timer = null
+var _time_label: Label = null
+var cam
+func _ready() -> void:
+	#instantiate_level()
+	#var cam_dir:= CameraDirector.new()
+	#call_deferred("add_child", cam_dir, true)
+	#cam_dir.call_deferred("setup_main_camera")
+	#cam = cam_dir
+	pass
+
+#func _input(event: InputEvent) -> void:
+	#if event.is_action_pressed("ui_accept"):
+		#cam.blend_to(Vector3(5, 10, 5), Vector3(20, 12, -20), 4.0)
+
+func _process(_delta: float) -> void:
+	if _time_label and _timer_turn:
+		_time_label.text = str(_timer_turn.time_left).pad_decimals(0)
+
+#region Instantiation
+func instantiate_level() -> void:
+	#var new_level:= preload(Constants.level_template).instantiate()
+	var new_level: PackedScene = load(Constants.levels_path["level_template"])
+	var level_instance = new_level.instantiate()
+	add_child(level_instance)
+	
+	var characters_node: Node3D = level_instance.get_node("Characters")
+	var spawns_position:= level_instance.get_node("Spawns").get_children()
+	#var objects_node: Node3D = new_level.get_node("Objects")
+	
+	for i in range(24):
+		instantiate_characters(characters_node, spawns_position)
+	_current_character = get_current_character()
+	if not character_list.is_empty():
+		instantiate_ui_manager(get_tree().get_root())
+
+func instantiate_characters(parent: Node3D, spawn_points: Array) -> void:
+	var new_character:Character= preload(Constants.character_path).instantiate()
+	spawn_points.shuffle()
+	var new_position = spawn_points.pop_front().global_position
+	
+	parent.add_child(new_character)
+	new_character.global_position = new_position
+	character_list[new_character.name] = new_character
+	turn_order.append(new_character.name)
+
+func instantiate_ui_manager(parent: Node) -> void:
+	if _new_ui_manager:
+		return
+	_new_ui_manager = UIManager.new()
+	_new_ui_manager.name = "UIManager"
+	_new_ui_manager.process_mode = Node.PROCESS_MODE_ALWAYS
+	parent.call_deferred("add_child", _new_ui_manager, true)
+	
+	#TODO modificar la forma en la que se instancias al igual que el resto
+	var new_hud: HUDManager = UIManager.add_hud_manager(_new_ui_manager)
+	var new_menu_pause: MenuPausaManager = UIManager.add_menu_pause_manager(_new_ui_manager)
+	_new_ui_manager.character = character_list.values()[0]
+	_new_ui_manager.hud = new_hud
+	_new_ui_manager.menu_pause = new_menu_pause
+	
+	#todo el segmento del reloj y el label son de prueba
+	_timer_turn = Timer.new()
+	_timer_turn.one_shot = true
+	_timer_turn.name = "Timer"
+	parent.call_deferred("add_child", _timer_turn, true)
+	
+	_time_label = Label.new()
+	_time_label.name = "TimerLabel"
+	_time_label.set("theme_override_font_sizes/font_size", 64)
+	parent.call_deferred("add_child", _time_label, true)
+	_time_label.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
+	_time_label.text = ""
+
+#endregion Instantiation
+
+#region Round Phase
+func change_round_phase() -> void:
+	match round_phase:
+		Constants.RoundPhase.ON_ROUND_STARTED:
+			on_round_started()
+			round_phase = Constants.RoundPhase.ON_THE_ROUND
+			change_round_phase()
+			
+		Constants.RoundPhase.ON_THE_ROUND:
+			on_the_round()
+			round_phase = Constants.RoundPhase.ON_ROUND_ENDED
+			change_turn_phase()
+			
+		Constants.RoundPhase.ON_ROUND_ENDED:
+			on_round_ended()
+			rounds += 1
+			round_phase = Constants.RoundPhase.ON_ROUND_STARTED
+			change_round_phase()
+
+func on_round_started() -> void:
+	print_rich("[color=blue][b]beginning the round [/b][/color]", rounds)
+
+
+func on_the_round() -> void:
+	print_rich("[color=blue][b]during the round [/b][/color]", rounds)
+
+
+func on_round_ended() -> void:
+	print_rich("[color=blue][b]ending the round [/b][/color]", rounds)
+
+func change_next_round() -> void:
+	_current_character = character_list[turn_order.front()]
+	_new_ui_manager.character = _current_character
+
+#endregion Round Phase
+
+#region Turn Phase
+func change_turn_phase() -> void:
+	match turn_phase:
+		Constants.TurnPhase.ON_TURN_STARTED:
+			on_turn_started()
+			
+			await get_tree().create_timer(turn_time).timeout
+			turn_phase = Constants.TurnPhase.ON_THE_TURN
+			#TODO: Hacer que ningun character este active para que no se puedan mover
+			change_turn_phase()
+		
+		Constants.TurnPhase.ON_THE_TURN:
+			on_the_turn()
+			
+			await get_tree().create_timer(turn_time).timeout
+			turn_phase = Constants.TurnPhase.ON_TURN_ENDED
+			change_turn_phase()
+		
+		Constants.TurnPhase.ON_TURN_ENDED:
+			on_turn_ended()
+			await get_tree().create_timer(turn_time).timeout
+			turn_phase = Constants.TurnPhase.ON_TURN_STARTED
+			turn += 1
+			if is_next_round():
+				change_round_phase()
+			else:
+				change_turn_phase()
+
+
+func on_turn_started() -> void:
+	prints("beginning the turn", turn)
+	var current_camera:Camera3D = get_tree().root.get_camera_3d()
+	if turn == 0:
+		current_camera.current = false
+	current_camera = get_tree().root.get_camera_3d()
+	
+	get_tree().call_group("character", "disable_character")
+	var rand_cam_position: Vector3 = Utils.random_vector3i(Vector3(-5, 15, -5), Vector3(5, 20, 5))
+	var rand_cam_direction: Vector3 = Utils.random_vector3i(Vector3(-30, 0, -3),Vector3i(30, 2, 30))
+	current_camera.look_at_from_position(rand_cam_position - rand_cam_direction, rand_cam_direction)
+	
+
+func on_the_turn() -> void:
+	prints("during the turn", turn)
+	change_next_turn()
+	if not _timer_turn:
+		return
+
+func on_turn_ended() -> void:
+	prints("ending the turn", turn)
+	var current_camera:Camera3D = get_tree().root.get_camera_3d()
+	current_camera.current = false
+	current_camera = get_tree().root.get_camera_3d()
+	
+	get_tree().call_group("character", "disable_character")
+	var rand_cam_position: Vector3 = Vector3(randf_range(-5, 5), randf_range(6, 8), randf_range(-5, 5))
+	var rand_targ_direction: Vector3 = _current_character.global_position
+	current_camera.look_at_from_position(rand_cam_position + rand_targ_direction, rand_targ_direction)
+
+func change_next_turn() -> void:
+	_current_character = get_current_character()
+	_new_ui_manager.character = _current_character
+
+#endregion Turn Phase
+
+func get_current_character() -> Character:
+	var i: int = turn % turn_order.size()
+	return character_list[turn_order[i]]
+
+func is_next_round() -> bool:
+	return ((turn) % turn_order.size()) == 0
+
+func camera_view_switch(_position: Vector3, _target: Vector3)-> void:
+	var current_camera:Camera3D = get_tree().root.get_camera_3d()
+	current_camera.look_at_from_position(_position, _target)

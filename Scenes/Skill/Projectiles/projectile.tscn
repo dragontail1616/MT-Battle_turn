@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://btbqvsgnpfhj"]
+
+[ext_resource type="Script" uid="uid://8lnn1t4ik1wp" path="res://Scenes/Skill/Projectiles/projectile.gd" id="1_othy8"]
+[ext_resource type="Script" uid="uid://crusgtbsvk4oy" path="res://Scripts/Health/hit_box.gd" id="2_nq428"]
+
+[node name="Projectile" type="RigidBody3D" node_paths=PackedStringArray("projectile_skin", "hit_box")]
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("1_othy8")
+projectile_skin = NodePath("ProjectileSkin")
+hit_box = NodePath("HitBox")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+
+[node name="ProjectileSkin" type="Node3D" parent="."]
+
+[node name="HitBox" type="Area3D" parent="."]
+script = ExtResource("2_nq428")
+metadata/_custom_type_script = "uid://crusgtbsvk4oy"

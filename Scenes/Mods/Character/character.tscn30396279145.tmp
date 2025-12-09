@@ -1,0 +1,364 @@
+[gd_scene load_steps=37 format=3 uid="uid://cc2p0htb3uuvq"]
+
+[ext_resource type="Material" uid="uid://y6fdx4hynd38" path="res://Resources/Materials/Mesh_Front_Material.tres" id="1_2lr1n"]
+[ext_resource type="Script" uid="uid://d25eq5dfjjy0r" path="res://Scenes/Mods/Character/character.gd" id="1_mrtk2"]
+[ext_resource type="Material" uid="uid://dlwkgqoo3jqdl" path="res://Resources/Materials/Mesh_Body_Material.tres" id="1_s6ygv"]
+[ext_resource type="Script" uid="uid://d3e6pbf6u03wf" path="res://Scripts/Camera/camera_controller.gd" id="4_106h7"]
+[ext_resource type="Script" uid="uid://bja6ihiye04ae" path="res://addons/shaker/src/Vector3/shaker_component3D.gd" id="5_t1541"]
+[ext_resource type="Script" uid="uid://c4j5oqwuiqh4l" path="res://addons/shaker/data/Vector3/BaseShakerType3D.gd" id="6_dr75e"]
+[ext_resource type="Script" uid="uid://clape7mytxs76" path="res://addons/shaker/data/Vector3/ShakerTypeSineWave3D.gd" id="7_qadly"]
+[ext_resource type="Script" uid="uid://c8854cgn6dvft" path="res://addons/shaker/data/Vector3/ShakerPreset3D.gd" id="8_0j2t0"]
+[ext_resource type="Script" uid="uid://u4aan3agipj6" path="res://Scripts/Skills/skill_controller.gd" id="9_dr75e"]
+[ext_resource type="PackedScene" uid="uid://btbqvsgnpfhj" path="res://Scenes/Skill/Projectiles/projectile.tscn" id="10_qadly"]
+[ext_resource type="PackedScene" uid="uid://6ukgc5urouio" path="res://Scenes/UI/HUD/hud.tscn" id="11_s8ewa"]
+[ext_resource type="PackedScene" uid="uid://dqgmdn55ir60l" path="res://Scenes/UI/HUD/crosshair.tscn" id="12_8c0aa"]
+[ext_resource type="Script" uid="uid://tjy8xf3m8n5h" path="res://Scripts/State_Machine/state_machine.gd" id="13_8c0aa"]
+[ext_resource type="Script" uid="uid://cqbh8xw5lueys" path="res://Scripts/Health/health_component.gd" id="13_kevck"]
+[ext_resource type="Script" uid="uid://c75hpqnmqqf6k" path="res://Scripts/State_Machine/States/idle_state.gd" id="14_53fyd"]
+[ext_resource type="Script" uid="uid://siruccj8c8ee" path="res://Scripts/Status/status_effect_controller.gd" id="14_ivern"]
+[ext_resource type="Script" uid="uid://dk1mwy2t87563" path="res://Scripts/State_Machine/States/move_state.gd" id="15_r6v7k"]
+[ext_resource type="Script" uid="uid://ciqenq13e5s40" path="res://Scripts/State_Machine/States/run_state.gd" id="16_ldtkp"]
+[ext_resource type="Script" uid="uid://cf02b07c4xawq" path="res://Scripts/State_Machine/States/jump_state.gd" id="17_htmji"]
+[ext_resource type="Script" uid="uid://crq1dpy73kffu" path="res://Scripts/State_Machine/States/fall_state.gd" id="18_mcdxo"]
+[ext_resource type="Script" uid="uid://ch6bersmjcaf1" path="res://Scripts/Health/hurt_box.gd" id="20_44t5a"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wbs0u"]
+radius = 0.25
+height = 1.6
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_wbs0u"]
+material = ExtResource("1_s6ygv")
+radius = 0.25
+height = 1.6
+
+[sub_resource type="BoxMesh" id="BoxMesh_wbs0u"]
+material = ExtResource("1_2lr1n")
+size = Vector3(0.25, 0.25, 0.25)
+
+[sub_resource type="BoxMesh" id="BoxMesh_s8ewa"]
+size = Vector3(0.05, 1, 0.05)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_s8ewa"]
+top_radius = 0.1
+bottom_radius = 0.005
+height = 0.2
+radial_segments = 24
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_60l85"]
+margin = 0.05
+radius = 0.25
+
+[sub_resource type="Resource" id="Resource_s8ewa"]
+script = ExtResource("7_qadly")
+frequency = Vector3(2, 2, 1)
+phase = Vector3(1, 2, 1)
+amplitude = Vector3(0.05, 0.05, 0)
+metadata/_custom_type_script = "uid://clape7mytxs76"
+
+[sub_resource type="Resource" id="Resource_8c0aa"]
+script = ExtResource("8_0j2t0")
+PositionShake = Array[ExtResource("6_dr75e")]([SubResource("Resource_s8ewa")])
+metadata/_custom_type_script = "uid://c8854cgn6dvft"
+
+[sub_resource type="Animation" id="Animation_s8ewa"]
+resource_name = "Aim_Staff"
+length = 0.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Skin/Mesh_Staff_Template:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.35, 0.15, 0), Vector3(0.35, 0.15, -0.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Skin/Mesh_Staff_Template:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-0.43633235, 0, 0), Vector3(-1.3089972, -0.08726647, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_53fyd"]
+resource_name = "Charging_Magic"
+length = 0.3
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Skin/Mesh_Staff_Template:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.016666668, 0.033333335, 0.05, 0.06666667, 0.083333336, 0.1, 0.105, 0.12166666, 0.13833334, 0.15, 0.16666667, 0.18333334, 0.2, 0.21666667, 0.23333333, 0.25, 0.255, 0.27166668, 0.28833333, 0.29972804),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.35, 0.15, -0.5), Vector3(0.35, 0.14556272, -0.5), Vector3(0.35, 0.10443729, -0.5), Vector3(0.35, 0.10000001, -0.5), Vector3(0.34903988, 0.100768104, -0.50364846), Vector3(0.33020243, 0.11583805, -0.5752308), Vector3(0.32531992, 0.11974405, -0.5937843), Vector3(0.325, 0.12, -0.595), Vector3(0.32897407, 0.12476888, -0.57989854), Vector3(0.35043234, 0.1505188, -0.49835715), Vector3(0.35, 0.15, -0.5), Vector3(0.35, 0.14556272, -0.5), Vector3(0.35, 0.104437284, -0.5), Vector3(0.35, 0.10000001, -0.5), Vector3(0.34903988, 0.100768104, -0.50364846), Vector3(0.33020243, 0.11583805, -0.5752308), Vector3(0.32531992, 0.11974405, -0.5937843), Vector3(0.325, 0.12, -0.595), Vector3(0.32761183, 0.123134226, -0.58507496), Vector3(0.3413173, 0.13958079, -0.5329942), Vector3(0.3409743, 0.13916917, -0.53429765)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Skin/Mesh_Staff_Template:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.016666668, 0.033333335, 0.05, 0.06666667, 0.083333336, 0.1, 0.105, 0.12166666, 0.13833334, 0.15, 0.16666667, 0.18333334, 0.2, 0.21666667, 0.23333333, 0.25, 0.255, 0.27166668, 0.28833333, 0.29972804),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-1.3089972, -0.08726647, 0), Vector3(-1.3084325, -0.10015009, 0.01334777), Vector3(-1.3031992, -0.2195575, 0.13705692), Vector3(-1.3026345, -0.23244113, 0.15040468), Vector3(-1.2993098, -0.22776109, 0.14901027), Vector3(-1.2340814, -0.13593933, 0.1216521), Vector3(-1.2171748, -0.11213995, 0.1145611), Vector3(-1.216067, -0.11058044, 0.11409645), Vector3(-1.2308394, -0.106874384, 0.09595936), Vector3(-1.3106042, -0.086863294, -0.0019730777), Vector3(-1.3089972, -0.08726647, 0), Vector3(-1.3084325, -0.1001501, 0.013347775), Vector3(-1.3031992, -0.21955752, 0.13705693), Vector3(-1.3026345, -0.23244113, 0.15040468), Vector3(-1.2993098, -0.22776109, 0.14901027), Vector3(-1.2340814, -0.13593933, 0.1216521), Vector3(-1.2171748, -0.11213995, 0.1145611), Vector3(-1.216067, -0.11058044, 0.11409645), Vector3(-1.2257757, -0.10814473, 0.10217631), Vector3(-1.2767218, -0.09536359, 0.039626554), Vector3(-1.2754468, -0.09568346, 0.041192003)]
+}
+
+[sub_resource type="Animation" id="Animation_8c0aa"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Skin/Mesh_Staff_Template:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.35, 0.15, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Skin/Mesh_Staff_Template:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.43633235, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_r6v7k"]
+resource_name = "Shoot_Skill"
+length = 0.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Skin/Mesh_Staff_Template:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.35, 0.15, -0.5), Vector3(0.3415814, 0.12411812, -0.40377498), Vector3(0.34466285, 0.18535537, -0.4389958), Vector3(0.35, 0.15, -0.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Skin/Mesh_Staff_Template:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-1.3089972, -0.08726647, 0), Vector3(-1.1344644, -0.08726647, 0), Vector3(-1.3089974, -0.08726647, 0), Vector3(-1.3089972, -0.08726647, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_htmji"]
+resource_name = "Staff_Run"
+length = 0.4
+loop_mode = 2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Skin/Mesh_Staff_Template:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.25, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.35, 0.15, 0), Vector3(0.35871556, -0.09665888, 0.050480008), Vector3(0.34003994, -0.10625083, -0.19665542), Vector3(0.35, -0.025154456, -0.13899975)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Skin/Mesh_Staff_Template:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.25, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.43633235, 0, 0), Vector3(-0.522882, -0.0174694, 0.09467178), Vector3(-0.9712005, -0.28503814, 0.092771955), Vector3(-0.43633235, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ldtkp"]
+resource_name = "Walk"
+length = 0.5
+loop_mode = 2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Skin/Mesh_Staff_Template:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.35, 0.15, 0), Vector3(0.35, 0.014053822, 0.06339276), Vector3(0.35, -0.025154453, -0.13899975), Vector3(0.35, -0.025154456, -0.13899975)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Skin/Mesh_Staff_Template:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.43633235, 0, 0), Vector3(-0.34906596, -2.7641418e-09, 0.08726646), Vector3(-0.43495992, 0.01668911, -0.18091503), Vector3(-0.43633235, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_r6v7k"]
+_data = {
+&"Aim_Staff": SubResource("Animation_s8ewa"),
+&"Charging_Magic": SubResource("Animation_53fyd"),
+&"RESET": SubResource("Animation_8c0aa"),
+&"Shoot_Skill": SubResource("Animation_r6v7k"),
+&"Staff_Run": SubResource("Animation_htmji"),
+&"Staff_Walk": SubResource("Animation_ldtkp")
+}
+
+[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("animation", "status_effect_controller")]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_mrtk2")
+animation = NodePath("AnimationPlayer")
+status_effect_controller = NodePath("StatusEffectController")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_wbs0u")
+
+[node name="Skin" type="Node3D" parent="."]
+
+[node name="Mesh_Body_Template" type="MeshInstance3D" parent="Skin"]
+mesh = SubResource("CapsuleMesh_wbs0u")
+skeleton = NodePath("../..")
+
+[node name="Mesh_Front_Template" type="MeshInstance3D" parent="Skin"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -0.3)
+mesh = SubResource("BoxMesh_wbs0u")
+
+[node name="Mesh_Staff_Template" type="MeshInstance3D" parent="Skin"]
+transform = Transform3D(1.0000002, 0, 0, 0, 0.9063079, 0.42261836, 0, -0.42261836, 0.9063079, 0.35, 0.15, 0)
+mesh = SubResource("BoxMesh_s8ewa")
+
+[node name="Muzzle" type="Marker3D" parent="Skin/Mesh_Staff_Template"]
+transform = Transform3D(0.9998845, 0.015014793, -0.0023123622, -0.0026429521, 0.022036776, -0.9997536, -0.014960129, 0.9996441, 0.02207379, 0.005627949, 0.6438718, -0.0104127)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Skin/Mesh_Staff_Template/Muzzle"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_s8ewa")
+
+[node name="CameraController" type="Node3D" parent="." node_paths=PackedStringArray("character", "sprint_arm", "camera", "shaker", "state_machine")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
+script = ExtResource("4_106h7")
+character = NodePath("..")
+sprint_arm = NodePath("SpringArm")
+camera = NodePath("SpringArm/CharacterCamera")
+shaker = NodePath("SpringArm/CharacterCamera/ShakerComponent3D")
+state_machine = NodePath("../StateMachine")
+mouse_captured = true
+tween_transition = 2
+
+[node name="SpringArm" type="SpringArm3D" parent="CameraController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.65, 0.100000024, 0.4)
+collision_mask = 3
+shape = SubResource("SphereShape3D_60l85")
+spring_length = 1.5
+
+[node name="CharacterCamera" type="Camera3D" parent="CameraController/SpringArm"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.07223e-08, -5.4016713e-08, -2.9802322e-07)
+
+[node name="ShakerComponent3D" type="Node3D" parent="CameraController/SpringArm/CharacterCamera"]
+script = ExtResource("5_t1541")
+intensity = 0.5
+shakerPreset = SubResource("Resource_8c0aa")
+metadata/_custom_type_script = "uid://bja6ihiye04ae"
+
+[node name="SkillController" type="Node3D" parent="." node_paths=PackedStringArray("camera", "muzzle")]
+script = ExtResource("9_dr75e")
+skill_scene = ExtResource("10_qadly")
+camera = NodePath("../CameraController/SpringArm/CharacterCamera")
+muzzle = NodePath("../Skin/Mesh_Staff_Template/Muzzle")
+
+[node name="HUD" parent="." instance=ExtResource("11_s8ewa")]
+
+[node name="Crosshair" parent="HUD" instance=ExtResource("12_8c0aa")]
+player_path = NodePath("../..")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_r6v7k")
+}
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("13_kevck")
+metadata/_custom_type_script = "uid://cqbh8xw5lueys"
+
+[node name="StatusEffectController" type="Node" parent="." node_paths=PackedStringArray("state_machine")]
+script = ExtResource("14_ivern")
+state_machine = NodePath("../StateMachine")
+metadata/_custom_type_script = "uid://siruccj8c8ee"
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state", "target", "animation")]
+script = ExtResource("13_8c0aa")
+initial_state = NodePath("IdleState")
+target = NodePath("..")
+animation = NodePath("../AnimationPlayer")
+
+[node name="IdleState" type="Node" parent="StateMachine"]
+script = ExtResource("14_53fyd")
+state_speed = 8.0
+state_animation = "RESET"
+metadata/_custom_type_script = "uid://c75hpqnmqqf6k"
+
+[node name="RunState" type="Node" parent="StateMachine"]
+script = ExtResource("15_r6v7k")
+state_speed = 8.0
+state_animation = "Staff_Walk"
+metadata/_custom_type_script = "uid://dk1mwy2t87563"
+
+[node name="SprintState" type="Node" parent="StateMachine"]
+script = ExtResource("16_ldtkp")
+state_animation = "Staff_Run"
+metadata/_custom_type_script = "uid://ciqenq13e5s40"
+
+[node name="JumpState" type="Node" parent="StateMachine"]
+script = ExtResource("17_htmji")
+metadata/_custom_type_script = "uid://cf02b07c4xawq"
+
+[node name="FallState" type="Node" parent="StateMachine"]
+script = ExtResource("18_mcdxo")
+metadata/_custom_type_script = "uid://crq1dpy73kffu"
+
+[node name="HurtBox" type="Area3D" parent="." node_paths=PackedStringArray("health_component")]
+script = ExtResource("20_44t5a")
+health_component = NodePath("../HealthComponent")
+metadata/_custom_type_script = "uid://ch6bersmjcaf1"

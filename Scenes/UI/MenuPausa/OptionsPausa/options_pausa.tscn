@@ -1,0 +1,84 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjq6mpjy2oduc"]
+
+[ext_resource type="Script" uid="uid://bi04uka8vqck0" path="res://Scenes/UI/MenuPausa/OptionsPausa/options_pausa.gd" id="1_n81dw"]
+
+[node name="OptionsPausa" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+grow_vertical = 2
+script = ExtResource("1_n81dw")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(360, 500)
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -250.0
+offset_right = 300.0
+offset_bottom = 250.0
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+custom_minimum_size = Vector2(346, 486)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Panel" type="Panel" parent="MarginContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="MenuOptions" type="VBoxContainer" parent="MarginContainer/PanelContainer/Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Label" type="Label" parent="MarginContainer/PanelContainer/Panel/MarginContainer/MenuOptions"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 46
+text = "Pause"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer/Panel/MarginContainer/MenuOptions"]
+layout_mode = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_right = 64
+
+[node name="ButtonOptions" type="VBoxContainer" parent="MarginContainer/PanelContainer/Panel/MarginContainer/MenuOptions/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Resumen" type="Button" parent="MarginContainer/PanelContainer/Panel/MarginContainer/MenuOptions/MarginContainer/ButtonOptions"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Resumen
+"
+
+[node name="Restart" type="Button" parent="MarginContainer/PanelContainer/Panel/MarginContainer/MenuOptions/MarginContainer/ButtonOptions"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Restart"
+
+[node name="Settings" type="Button" parent="MarginContainer/PanelContainer/Panel/MarginContainer/MenuOptions/MarginContainer/ButtonOptions"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Settings"
+
+[node name="Quit" type="Button" parent="MarginContainer/PanelContainer/Panel/MarginContainer/MenuOptions/MarginContainer/ButtonOptions"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Quit"
