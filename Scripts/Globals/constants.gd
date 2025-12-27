@@ -33,6 +33,19 @@ enum SkillCategory {
 	SPECIAL
 }
 
+enum ControlType {
+	NONE,
+	PLAYER,
+	AI
+}
+
+enum CameraMode {
+	FOLLOW,
+	ORBITAL,
+	FREE,
+	STRATEGIC
+}
+
 const items_path: Dictionary[String, String] = {
 	"stone_cannon": "uid://c00vpqhply67v"
 }

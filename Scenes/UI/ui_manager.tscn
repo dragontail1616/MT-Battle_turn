@@ -1,10 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://bwhk6en222i67"]
+[gd_scene load_steps=5 format=3 uid="uid://bwhk6en222i67"]
 
 [ext_resource type="Script" uid="uid://3ycwh860ngrd" path="res://Scenes/UI/ui_manager.gd" id="1_6pb3g"]
 [ext_resource type="PackedScene" uid="uid://6ukgc5urouio" path="res://Scenes/UI/HUD/hud.tscn" id="2_huwks"]
 [ext_resource type="PackedScene" uid="uid://dl6abuv2wbtbo" path="res://Scenes/UI/MenuPausa/menu_pausa.tscn" id="3_1bij0"]
+[ext_resource type="PackedScene" uid="uid://cjbfl1y0fkm2y" path="res://Scenes/UI/DebugPanel/debug_panel.tscn" id="4_88ycu"]
 
-[node name="UIManager" type="Control" node_paths=PackedStringArray("hud", "menu_pause")]
+[node name="UIManager" type="Control" node_paths=PackedStringArray("hud", "menu_pause", "debug_panel")]
 process_mode = 3
 layout_mode = 3
 anchors_preset = 15
@@ -15,7 +16,10 @@ grow_vertical = 2
 script = ExtResource("1_6pb3g")
 hud = NodePath("HUD")
 menu_pause = NodePath("MenuPausa")
+debug_panel = NodePath("DebugPanel")
 
 [node name="HUD" parent="." instance=ExtResource("2_huwks")]
 
 [node name="MenuPausa" parent="." instance=ExtResource("3_1bij0")]
+
+[node name="DebugPanel" parent="." instance=ExtResource("4_88ycu")]

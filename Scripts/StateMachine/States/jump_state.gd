@@ -3,7 +3,7 @@ extends MovementState
 
 func enter() -> void:
 	super.enter()
-	target.contro_jump(jump_force, get_physics_process_delta_time())
+	target.control_jump(jump_force, get_physics_process_delta_time())
 
 func input(event: InputEvent) -> void:
 	super.input(event)

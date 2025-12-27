@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cncl5j1k5yx81"]
+[gd_scene load_steps=10 format=3 uid="uid://cncl5j1k5yx81"]
 
 [ext_resource type="Texture2D" uid="uid://brpqcqh0tqia5" path="res://Assets/Textures/Gray_box_texture.png" id="1_nqhii"]
 [ext_resource type="Script" uid="uid://bhlfm2ls4q0il" path="res://Scenes/Levels/level.gd" id="1_yhrl8"]
@@ -15,6 +15,10 @@ sky_material = SubResource("ProceduralSkyMaterial_5a1yd")
 background_mode = 2
 sky = SubResource("Sky_wks4m")
 tonemap_mode = 2
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_nqhii"]
+vertices = PackedVector3Array(-49.5, 3.5500002, -49.5, -49.5, 3.5500002, -36.25, -49, 3.5500002, -49.25, -48.25, 0.5500001, -48.25, -48.25, 0.5500001, 48.5, 48.5, 0.5500001, 48.5, 48.5, 0.5500001, -48.25)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(6, 5, 3), PackedInt32Array(3, 5, 4)]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nqhii"]
 albedo_texture = ExtResource("1_nqhii")
@@ -36,24 +40,28 @@ environment = SubResource("Environment_nqhii")
 transform = Transform3D(-0.8660254, -0.43301278, 0.24999999, -0.041073598, 0.5599205, 0.82752764, -0.49831015, 0.7063915, -0.5026908, 0, 0, 0)
 shadow_enabled = true
 
-[node name="CSG_Terrain" type="CSGCombiner3D" parent="Enviroment"]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="Enviroment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.05, 0, -0.05)
+navigation_mesh = SubResource("NavigationMesh_nqhii")
+
+[node name="CSG_Terrain" type="CSGCombiner3D" parent="Enviroment/NavigationRegion3D"]
 layers = 2
 use_collision = true
 
-[node name="CSGBox3D" type="CSGBox3D" parent="Enviroment/CSG_Terrain"]
+[node name="CSGBox3D" type="CSGBox3D" parent="Enviroment/NavigationRegion3D/CSG_Terrain"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5000001, 0)
 size = Vector3(100, 3.4, 100)
 material = SubResource("StandardMaterial3D_nqhii")
 
-[node name="CSGBox3D115" type="CSGBox3D" parent="Enviroment/CSG_Terrain"]
+[node name="CSGBox3D115" type="CSGBox3D" parent="Enviroment/NavigationRegion3D/CSG_Terrain"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, 0)
 operation = 2
 size = Vector3(98, 3.1, 98)
 material = SubResource("StandardMaterial3D_nqhii")
 
 [node name="CSG_Obstables" type="CSGCombiner3D" parent="Enviroment"]
+visible = false
 layers = 2
-use_collision = true
 collision_layer = 2
 collision_mask = 5
 

@@ -8,6 +8,8 @@ extends State
 @export var jump_force: float = 300.0
 @export var state_animation: String
 
+var i_frame: InputFrame
+
 var _current_speed: float = 0.0
 var _current_accel: float = 0.0
 var _current_desacel: float = 0.0
@@ -36,8 +38,8 @@ func enter() -> void:
 	_current_accel = state_accel
 	_current_desacel = state_desaccel
 
-func input(_event: InputEvent) -> void:
-	pass
+func input(event: InputEvent) -> void:
+	i_frame = target.input_controller.get_input_frame(event)
 
 func update_process(_delta: float) -> void:
 	pass
@@ -45,8 +47,10 @@ func update_process(_delta: float) -> void:
 func update_physics_process(delta: float) -> void:
 	if not target:
 		return
-	_is_channeling = Input.is_action_pressed("skill")
-	_current_speed = holding_speed if Input.is_action_pressed("skill") else state_speed
+	
+	i_frame = target.input_controller.get_input_frame()
+	_is_channeling = i_frame.channeling
+	_current_speed = holding_speed if _is_channeling else state_speed
 	
 	target.control_gravity(delta)
 	target.control_direction(_current_speed, _current_accel, _current_desacel, delta)

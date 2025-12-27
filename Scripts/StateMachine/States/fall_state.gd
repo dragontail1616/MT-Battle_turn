@@ -1,12 +1,17 @@
-class_name RunState
+class_name FallState
 extends MovementState
 
+var max_height_resistence: float = 0.0
 
 func enter() -> void:
 	super.enter()
 
 func input(event: InputEvent) -> void:
 	super.input(event)
+	
+	if i_frame.falling:
+		target.control_jump(target.velocity.y * 0.6, get_physics_process_delta_time())
+	
 
 func update_process(_delta: float) -> void:
 	pass
@@ -14,21 +19,14 @@ func update_process(_delta: float) -> void:
 func update_physics_process(delta: float) -> void:
 	if not target:
 		return
-		
-	if Input.is_action_just_pressed("jump") and target.is_on_floor():
-		change_next_state.emit("jumpstate")
+
+	super.update_physics_process(delta)
 	
-	if Input.is_action_pressed("run"):
+	if i_frame.sprint and target.is_on_floor():
 		change_next_state.emit("sprintstate")
 	
-	if target.velocity.y > 0.0:
-		change_next_state.emit("fallstate")
-	
-	if abs(target.velocity.length()) < 0.1:
+	if target.is_on_floor():
 		change_next_state.emit("idlestate")
-	
-	super.update_physics_process(delta)
 
 func exit() -> void:
-	if animation:
-		animation.stop()
+	super.exit()
