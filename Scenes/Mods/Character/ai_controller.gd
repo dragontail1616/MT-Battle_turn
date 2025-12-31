@@ -6,9 +6,7 @@ extends InputController
 @export var reaction_time: float = 1.2
 @export var error_angle: float = 5.0
 
-var i_frame: InputFrame
-
-func get_input_frame(event: InputEvent = null) -> InputFrame:
-	i_frame = InputFrame.new()
+func get_input_frame(_event: InputEvent = null) -> InputFrame:
+	var i_frame: InputFrame = InputFrame.new()
 	
 	return i_frame

@@ -1,4 +1,4 @@
-class_name StatusEffectController
+class_name StatusController
 extends Node
 
 @export var target: Character

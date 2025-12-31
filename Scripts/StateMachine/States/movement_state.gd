@@ -49,6 +49,7 @@ func update_physics_process(delta: float) -> void:
 		return
 	
 	i_frame = target.input_controller.get_input_frame()
+	#esta condicion y el channeling son momentaneos hasta que se arme el animationtree
 	_is_channeling = i_frame.channeling
 	_current_speed = holding_speed if _is_channeling else state_speed
 	

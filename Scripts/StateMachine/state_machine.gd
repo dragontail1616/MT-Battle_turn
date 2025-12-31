@@ -52,6 +52,9 @@ func change_next_state(name_next_state: String) -> void:
 		Utils.debug_print("State doesn't exist:", name_next_state)
 		return
 	
+	if _current_state.name == name_next_state:
+		return
+	
 	var prev_state: State = _current_state
 	var new_state: State = states.get(name_next_state.to_lower())
 	_current_state.exit()
