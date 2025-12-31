@@ -107,8 +107,8 @@ func _on_round_started(no_round: int) -> void:
 	if tween_interval:
 		tween_interval.kill()
 	tween_interval = create_tween()
-	var shot_amount = Utils.random_int(3, 5)
-	for _i in range(1):
+	var camera_shot_amount = Utils.random_int(1, 1)
+	for _i in range(camera_shot_amount):
 		var ran_dur = Utils.random_float(1.8, 2.2)
 		var ran_int = Utils.random_float(1.6, 2.0)
 		var spawn_pos: Vector3 = spawn_list.pick_random().global_position + Vector3.UP * 6
@@ -147,3 +147,4 @@ func _on_turn_started(character: Character, no_turn: int, team_name: String) -> 
 
 func _on_turn_ended(character: Character, no_turn: int, team_name: String) -> void:
 	prints("Character", character.name, "form team", team_name, "end the turn", no_turn)
+	character.character_active = false

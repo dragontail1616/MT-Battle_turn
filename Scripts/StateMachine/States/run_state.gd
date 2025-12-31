@@ -1,5 +1,6 @@
-class_name IdleState
+class_name RunState
 extends MovementState
+
 
 func enter() -> void:
 	super.enter()
@@ -14,20 +15,20 @@ func update_physics_process(delta: float) -> void:
 	if not target:
 		return
 		
-	if Input.is_action_just_pressed("jump") and target.is_on_floor():
+	super.update_physics_process(delta)
+		
+	if i_frame.jump and target.is_on_floor():
 		change_next_state.emit("jumpstate")
+	
+	if i_frame.sprint:
+		change_next_state.emit("sprintstate")
 	
 	if target.velocity.y > 0.0:
 		change_next_state.emit("fallstate")
 	
-	if target.velocity.length() > 0.1:
-		change_next_state.emit("runstate")
+	if abs(target.velocity.length()) < 0.1:
+		change_next_state.emit("idlestate")
 	
-	if Input.is_action_pressed("run"):
-		change_next_state.emit("sprintstate")
-	
-	super.update_physics_process(delta)
-
 
 func exit() -> void:
 	super.exit()
