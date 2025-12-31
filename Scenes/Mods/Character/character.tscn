@@ -14,7 +14,7 @@
 [ext_resource type="Script" uid="uid://cqbh8xw5lueys" path="res://Scripts/Health/health_component.gd" id="13_kevck"]
 [ext_resource type="Script" uid="uid://c75hpqnmqqf6k" path="res://Scripts/StateMachine/States/idle_state.gd" id="14_53fyd"]
 [ext_resource type="Script" uid="uid://siruccj8c8ee" path="res://Scripts/Status/status_effect_controller.gd" id="14_ivern"]
-[ext_resource type="Script" uid="uid://dk1mwy2t87563" path="res://Scripts/StateMachine/States/run_state.gd" id="15_r6v7k"]
+[ext_resource type="Script" uid="uid://ciqenq13e5s40" path="res://Scripts/StateMachine/States/run_state.gd" id="15_r6v7k"]
 [ext_resource type="Script" uid="uid://ciqenq13e5s40" path="res://Scripts/StateMachine/States/sprint_state.gd" id="16_ldtkp"]
 [ext_resource type="Script" uid="uid://cf02b07c4xawq" path="res://Scripts/StateMachine/States/jump_state.gd" id="17_htmji"]
 [ext_resource type="Script" uid="uid://crq1dpy73kffu" path="res://Scripts/StateMachine/States/fall_state.gd" id="18_mcdxo"]
