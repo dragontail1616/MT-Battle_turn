@@ -37,7 +37,8 @@ func _ready() -> void:
 	state_machine.state_changed.connect(camera_state)
 	sprint_arm.spring_length = default_zoom
 	current_zoom = default_zoom
-	character.character_active_changed.connect(func (a: bool): camera.current = a)
+	character.character_actived.connect(func(): camera.current = true)
+	character.character_desactived.connect(func(): camera.current = false)
 
 func _input(event: InputEvent) -> void:
 	if not camera.current:

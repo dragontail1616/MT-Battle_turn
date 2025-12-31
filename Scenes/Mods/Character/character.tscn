@@ -10,14 +10,14 @@
 [ext_resource type="Script" uid="uid://c8854cgn6dvft" path="res://addons/shaker/data/Vector3/ShakerPreset3D.gd" id="8_0j2t0"]
 [ext_resource type="Script" uid="uid://u4aan3agipj6" path="res://Scripts/Skills/skill_controller.gd" id="9_dr75e"]
 [ext_resource type="PackedScene" uid="uid://c3nx52yqmptvn" path="res://Scenes/Skill/Projectiles/stone_cannon.tscn" id="10_ivern"]
-[ext_resource type="Script" uid="uid://tjy8xf3m8n5h" path="res://Scripts/State_Machine/state_machine.gd" id="13_8c0aa"]
+[ext_resource type="Script" uid="uid://tjy8xf3m8n5h" path="res://Scripts/StateMachine/state_machine.gd" id="13_8c0aa"]
 [ext_resource type="Script" uid="uid://cqbh8xw5lueys" path="res://Scripts/Health/health_component.gd" id="13_kevck"]
-[ext_resource type="Script" uid="uid://c75hpqnmqqf6k" path="res://Scripts/State_Machine/States/idle_state.gd" id="14_53fyd"]
+[ext_resource type="Script" uid="uid://c75hpqnmqqf6k" path="res://Scripts/StateMachine/States/idle_state.gd" id="14_53fyd"]
 [ext_resource type="Script" uid="uid://siruccj8c8ee" path="res://Scripts/Status/status_effect_controller.gd" id="14_ivern"]
-[ext_resource type="Script" uid="uid://dk1mwy2t87563" path="res://Scripts/State_Machine/States/move_state.gd" id="15_r6v7k"]
-[ext_resource type="Script" uid="uid://ciqenq13e5s40" path="res://Scripts/State_Machine/States/run_state.gd" id="16_ldtkp"]
-[ext_resource type="Script" uid="uid://cf02b07c4xawq" path="res://Scripts/State_Machine/States/jump_state.gd" id="17_htmji"]
-[ext_resource type="Script" uid="uid://crq1dpy73kffu" path="res://Scripts/State_Machine/States/fall_state.gd" id="18_mcdxo"]
+[ext_resource type="Script" uid="uid://ciqenq13e5s40" path="res://Scripts/StateMachine/States/run_state.gd" id="15_r6v7k"]
+[ext_resource type="Script" uid="uid://ciqenq13e5s40" path="res://Scripts/StateMachine/States/sprint_state.gd" id="16_ldtkp"]
+[ext_resource type="Script" uid="uid://cf02b07c4xawq" path="res://Scripts/StateMachine/States/jump_state.gd" id="17_htmji"]
+[ext_resource type="Script" uid="uid://crq1dpy73kffu" path="res://Scripts/StateMachine/States/fall_state.gd" id="18_mcdxo"]
 [ext_resource type="Script" uid="uid://ch6bersmjcaf1" path="res://Scripts/Health/hurt_box.gd" id="20_44t5a"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wbs0u"]
@@ -313,7 +313,7 @@ libraries = {
 script = ExtResource("13_kevck")
 metadata/_custom_type_script = "uid://cqbh8xw5lueys"
 
-[node name="StatusEffectController" type="Node" parent="." node_paths=PackedStringArray("target")]
+[node name="StatusController" type="Node" parent="." node_paths=PackedStringArray("target")]
 script = ExtResource("14_ivern")
 target = NodePath("..")
 metadata/_custom_type_script = "uid://siruccj8c8ee"

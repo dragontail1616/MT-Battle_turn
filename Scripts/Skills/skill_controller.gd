@@ -9,6 +9,7 @@ enum SkillType {
 	EVENT
 }
 
+@export var character: Character
 @export var skill_type_selected: SkillType = SkillType.NONE
 @export var skill_scene: PackedScene
 @export var camera: Camera3D
@@ -19,7 +20,7 @@ var _projectile_preview: Projectile = null
 var direccion: Vector3 = Vector3.ZERO
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action("skill"):
+	if event.is_action("skill") and character.character_active:
 		if event.is_action_pressed("skill"):
 			_projectile_preview = preview_projectile()
 		if event.is_action_released("skill"):

@@ -1,0 +1,21 @@
+[gd_scene load_steps=2 format=3 uid="uid://cjbfl1y0fkm2y"]
+
+[ext_resource type="Script" uid="uid://df607d8g48pww" path="res://Scenes/UI/DebugPanel/debug_panel.gd" id="1_m35fn"]
+
+[node name="DebugPanel" type="CanvasLayer"]
+script = ExtResource("1_m35fn")
+
+[node name="Debug" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="Debug"]
+custom_minimum_size = Vector2(260, 360)
+layout_mode = 0
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 272.0
+offset_bottom = 392.0
+
+[node name="PropertiesList" type="VBoxContainer" parent="Debug/PanelContainer"]
+layout_mode = 2
